@@ -1,0 +1,24 @@
+{
+  "name": "aat-labs/microsoft-dynamics-connector",
+  "description": "Microsoft Dynamics Connector for PHP - Connect to MS Dynamics CRM using SOAP and REST",
+  "license": "Apache-2.0",
+  "keywords": ["microsoft", "dynamics", "crm", "soap", "rest", "integration"],
+  "type": "library",
+  "authors": [
+    {
+      "name": "AAT Labs",
+      "homepage": "http://github.com/aat-labs"
+    }
+  ],
+  "require": {
+    "guzzlehttp/guzzle": "~6.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.0.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "AAT\\CRM\\": "src"
+    }
+  }
+}
