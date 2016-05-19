@@ -1,6 +1,8 @@
 Microsoft Dynamics Connector for PHP
 ====================================
 
+[![Build Status](https://travis-ci.org/aat-labs/microsoft-dynamics-connector.svg?branch=master)](https://travis-ci.org/aat-labs/microsoft-dynamics-connector)
+
 The Microsoft Dynamics Connector is a PHP package to make it easy to integrate your
 PHP application with CRM's SOAP service and RESTful endpoint (OData).
 
