@@ -177,6 +177,57 @@ class CRM_RestConnector_Test extends PHPUnit_Framework_TestCase {
     $this->assertAttributeEquals($expected_url, 'url', $connector);
   }
 
+  public function testGetNoGuidFieldsLinkedFiltersOrder() {
+    $entity = 'aat_unitresult';
+    $fields = array(
+      'ModifiedOn',
+      'CreatedOn'
+    );
+    $linked_fields = array(
+      'aat_contact_aat_unitresult'
+    );
+    $filters = array(
+      array(
+        'field' => 'aat_trainingproviderreg/Id',
+        'value' => 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+      )
+    );
+    $order = array(
+      'field' => 'CreatedOn',
+      'ascdesc' => 'desc'
+    );
+    $connector = new RestConnector($this->testHost, $this->credentials);
+    $connector->get($entity, NULL, $fields, $linked_fields, $filters, $order);
+
+    $expected_url = "https://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')&\$orderby=CreatedOn%20desc";
+    $this->assertAttributeEquals($expected_url, 'url', $connector);
+  }
+
+  public function testGetNoGuidFieldsLinkedFiltersOrderDefault() {
+    $entity = 'aat_unitresult';
+    $fields = array(
+      'ModifiedOn',
+      'CreatedOn'
+    );
+    $linked_fields = array(
+      'aat_contact_aat_unitresult'
+    );
+    $filters = array(
+      array(
+        'field' => 'aat_trainingproviderreg/Id',
+        'value' => 'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX',
+      )
+    );
+    $order = array(
+      'field' => 'ModifiedOn'
+    );
+    $connector = new RestConnector($this->testHost, $this->credentials);
+    $connector->get($entity, NULL, $fields, $linked_fields, $filters, $order);
+
+    $expected_url = "https://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')&\$orderby=ModifiedOn%20asc";
+    $this->assertAttributeEquals($expected_url, 'url', $connector);
+  }
+
   public function testSetUrl() {
     $test_url = "https://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')";
     $connector = new RestConnector($this->testHost, $this->credentials);

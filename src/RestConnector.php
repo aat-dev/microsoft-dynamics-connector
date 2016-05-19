@@ -48,10 +48,11 @@ class RestConnector extends Connector {
    * @param array (optional) $fields
    * @param array (optional) $linked_fields
    * @param array (optional) $filters
+   * @param array (optional $order
    *
    * @return $this
    */
-  public function get($entity_name, $guid = NULL, $fields = array(), $linked_fields = array(), $filters = array()) {
+  public function get($entity_name, $guid = NULL, $fields = array(), $linked_fields = array(), $filters = array(), $order = array()) {
 
     if (!preg_match("~^(?:f|ht)tps?://~i", $this->host)) {
       $this->url = $this->useHttps ? "https://" : "http://";
@@ -86,7 +87,11 @@ class RestConnector extends Connector {
       $this->url .= '&$filter=' . implode('%20and%20', $f);
     }
 
-    //$response = $this->doRequest($url);
+    if (!empty($order)) {
+      $ascdesc = isset($order['ascdesc']) ? $order['ascdesc'] : 'asc';
+      $this->url .= '&$orderby=' . $order['field'] . '%20' . $ascdesc;
+    }
+
     return $this;
   }
 
