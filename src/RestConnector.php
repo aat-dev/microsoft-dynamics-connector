@@ -104,6 +104,9 @@ class RestConnector extends Connector {
    * @return $this
    */
   public function setUrl($url) {
+    if ($this->useHttps) {
+      $url = str_replace('http://', 'https://', $url);
+    }
     $this->url = $url;
     return $this;
   }

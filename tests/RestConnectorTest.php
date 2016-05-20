@@ -229,10 +229,19 @@ class CRM_RestConnector_Test extends PHPUnit_Framework_TestCase {
   }
 
   public function testSetUrl() {
-    $test_url = "https://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')";
+    $test_url = "http://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')";
     $connector = new RestConnector($this->testHost, $this->credentials);
+    $connector->setHttp();
     $connector->setUrl($test_url);
     $this->assertAttributeEquals($test_url, 'url', $connector);
+  }
+
+  public function testSetUrlForceHttps() {
+    $test_url = "http://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')";
+    $expected_url = "https://localhost/AAT/xrmservices/2011/organizationdata.svc/aat_unitresultSet?\$select=ModifiedOn,CreatedOn&\$expand=aat_contact_aat_unitresult&\$filter=aat_trainingproviderreg/Id%20eq%20(guid'XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX')";
+    $connector = new RestConnector($this->testHost, $this->credentials);
+    $connector->setUrl($test_url);
+    $this->assertAttributeEquals($expected_url, 'url', $connector);
   }
 
   /**
