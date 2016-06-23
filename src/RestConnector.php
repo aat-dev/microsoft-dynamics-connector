@@ -82,7 +82,13 @@ class RestConnector extends Connector {
     if (!empty($filters)) {
       $f = array();
       foreach ($filters as $filter) {
-        $f[] = $filter['field'] . "%20" . (isset($filter['operator']) ? $filter['operator'] : 'eq') . "%20(guid'" . $filter['value'] . "')";
+        if (!isset($filter['notentityref'])) {
+          $filter['value'] = "(guid'" . $filter['value'] . "')";
+        }
+        if (!isset($filter['operator'])) {
+          $filter['operator'] = 'eq';
+        }
+        $f[] = $filter['field'] . "%20" . $filter['operator'] . "%20" . $filter['value'];
       }
       $this->url .= '&$filter=' . implode('%20and%20', $f);
     }
